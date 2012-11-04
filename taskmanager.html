@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+		<title>task manager</title>
+		<meta charset="utf-8">
+		
+		<link href='res/font.css' rel='stylesheet' type='text/css'>
+		<link href="taskmanager.css" type="text/css" rel="stylesheet" />
+		
+		<script type="text/javascript src="jquery-1.8.2.min.js"></script>
+		<script type="text/javascript">
+			var target = null;
+
+			function addListeners() {
+				document.getElementById('meh').addEventListener('mousedown', mouseDown, false);
+				document.getElementById('teh').addEventListener('mousedown', mouseDown, false);
+				document.getElementById('beh').addEventListener('mousedown', mouseDown, false);
+				window.addEventListener('mouseup', mouseUp, false);
+			}
+
+			function mouseUp() {
+				window.removeEventListener('mousemove', divMove, true);
+			}
+
+			function mouseDown(e) {
+				window.addEventListener('mousemove', divMove, true);
+				target = e.currentTarget
+			}
+
+			function divMove(e) {
+				var div = target;
+				div.style.height = (e.clientY - div.offsetTop + window.pageYOffset) + 'px';
+				div.children[0].innerHTML = e.clientY + " seconds";
+			}
+		</script>
+	</head>
+	
+	<body bgcolor="black" onload="addListeners()">
+		<div style="height:500px; width:100%; background-color:black;">
+			<font color="white"><h1>Owen's Scheduler - Drag Stuff!</h1></font>
+			<div id="meh" style="width:100%; background-color:red">Programming<p class="time" align="right"></p></div>
+			<div id="teh" style="width:100%; background-color:blue">Testing<p class="time" align="right"></p></div>
+			<div id="beh" style="width:100%; background-color:gray">Homework<p class="time" align="right"></p></div>
+		</div>​
+	</body
+</html>
