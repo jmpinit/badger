@@ -29,6 +29,9 @@
 			}
 
 			function mouseDown(e) {
+				var available = document.getElementById('available');
+				available.style.height = (window.innerHeight-96)+"px";
+				
 				window.addEventListener('mousemove', divMove, true);
 				target = e.currentTarget
 			}
@@ -62,9 +65,9 @@
 		<div style="height:500px; width:100%; background-color:black;">
 			<font color="white"><h1>Owen's Scheduler - Drag Stuff!</h1></font>
 			<div id="available" style="border: white 5px solid; height: 100%; padding: 10px;">
-				<div id="task1" style="width:100%; background-color:red">Programming<p class="time" align="right"></p></div>
-				<div id="task2" style="width:100%; background-color:blue">Testing<p class="time" align="right"></p></div>
-				<div id="task3" style="width:100%; background-color:gray">Homework<p class="time" align="right"></p></div>
+				<div class="task" id="task1" style="width:100%; background-color:red">Programming<p class="time" align="right"></p></div>
+				<div class="task" id="task2" style="width:100%; background-color:blue">Testing<p class="time" align="right"></p></div>
+				<div class="task" id="task3" style="width:100%; background-color:gray">Homework<p class="time" align="right"></p></div>
 			</div>
 		</div>​
 	</body
