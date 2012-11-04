@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>task manager</title>
+		<title>badger - the task manager</title>
 		<meta charset="utf-8">
 		
 		<link href='res/font.css' rel='stylesheet' type='text/css'>
@@ -10,11 +10,17 @@
 		<script type="text/javascript src="jquery-1.8.2.min.js"></script>
 		<script type="text/javascript">
 			var target = null;
+			
+			function init() {
+				var available = document.getElementById('available');
+				available.style.height = (window.innerHeight-96)+"px";
+				addListeners();
+			}
 
 			function addListeners() {
-				document.getElementById('meh').addEventListener('mousedown', mouseDown, false);
-				document.getElementById('teh').addEventListener('mousedown', mouseDown, false);
-				document.getElementById('beh').addEventListener('mousedown', mouseDown, false);
+				document.getElementById('task1').addEventListener('mousedown', mouseDown, false);
+				document.getElementById('task2').addEventListener('mousedown', mouseDown, false);
+				document.getElementById('task3').addEventListener('mousedown', mouseDown, false);
 				window.addEventListener('mouseup', mouseUp, false);
 			}
 
@@ -28,19 +34,38 @@
 			}
 
 			function divMove(e) {
-				var div = target;
-				div.style.height = (e.clientY - div.offsetTop + window.pageYOffset) + 'px';
-				div.children[0].innerHTML = e.clientY + " seconds";
+				var newHeight = e.clientY - target.offsetTop + window.pageYOffset;
+				
+				target.style.height = newHeight + 'px';
+				target.children[0].innerHTML = e.clientY + " seconds";
+			}
+			
+			function findPos(node) {
+				var curtop = 0;
+				var curtopscroll = 0;
+				
+				if (node.offsetParent) {
+					do {
+						curtop += node.offsetTop;
+						curtopscroll += node.offsetParent ? node.offsetParent.scrollTop : 0;
+					} while (node = node.offsetParent);
+
+					return (curtop - curtopscroll);
+				}
+				
+				return 0;
 			}
 		</script>
 	</head>
 	
-	<body bgcolor="black" onload="addListeners()">
+	<body bgcolor="black" onload="init()">
 		<div style="height:500px; width:100%; background-color:black;">
 			<font color="white"><h1>Owen's Scheduler - Drag Stuff!</h1></font>
-			<div id="meh" style="width:100%; background-color:red">Programming<p class="time" align="right"></p></div>
-			<div id="teh" style="width:100%; background-color:blue">Testing<p class="time" align="right"></p></div>
-			<div id="beh" style="width:100%; background-color:gray">Homework<p class="time" align="right"></p></div>
+			<div id="available" style="border: white 5px solid; height: 100%; padding: 10px;">
+				<div id="task1" style="width:100%; background-color:red">Programming<p class="time" align="right"></p></div>
+				<div id="task2" style="width:100%; background-color:blue">Testing<p class="time" align="right"></p></div>
+				<div id="task3" style="width:100%; background-color:gray">Homework<p class="time" align="right"></p></div>
+			</div>
 		</div>​
 	</body
 </html>
