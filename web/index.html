@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nasty Input Test</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap -->
+		<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	</head>
+	<body>
+		<div class="container">
+			<h1>New Event</h1>
+			<div class="input-group">
+				<input id="name" type="text" class="form-control" placeholder="Name">
+				<input id="time" type="text" class="form-control" placeholder="Time">
+				<input id="place" type="text" class="form-control" placeholder="Place">
+				<input id="tag" type="text" class="form-control" placeholder="Tag">
+				<input id="priority" type="text" class="form-control" placeholder="Priority">
+				<input id="setup" type="text" class="form-control" placeholder="Setup time">
+				<input id="ongoing" type="text" class="form-control" placeholder="Ongoing commitment">
+				<input id="note" type="text" class="form-control" placeholder="Note">
+			</div>
+
+			<!-- scripts -->
+			<script src="http://code.jquery.com/jquery.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+			<script src="js/levenshtein.js"></script>
+
+			<!-- nasty input -->
+			<script>
+				days = {
+					full: [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" ],
+					short: [ "mon", "tue", "wed", "thur", "fri", "sat", "sun" ]
+				}
+
+				$('#time').on('blur', function() {
+					var inputs = $(this).val().split(" ")
+
+					for(var i in inputs) inputs[i] = inputs[i].trim();
+
+					for(var i in inputs) {
+						var minval = null;
+						var best = null;
+
+						for(var d in days.full) {
+							var dist = (new Levenshtein(inputs[i], days.full[d])).distance;
+
+							if(minval == null || dist < minval) {
+								best = days.full[d];
+								minval = dist;
+							}
+						}
+
+						inputs[i] = best;
+					}
+
+					$(this).val(inputs.join(" "));
+				});
+			</script>
+		</div>
+	</body>
+</html>
